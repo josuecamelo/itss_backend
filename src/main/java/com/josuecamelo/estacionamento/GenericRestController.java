@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +33,12 @@ public class GenericRestController<T> {
 	public T create(@RequestBody T t) {
 		return this.baseService.create(t);
 	}
+	
+	/*@GetMapping
+	@ResponseBody
+	public Page<T> findAll(Pageable pageable) {
+		return this.baseService.findAll(pageable);
+	}*/
 	
 	@GetMapping
 	@ResponseBody

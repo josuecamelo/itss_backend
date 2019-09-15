@@ -1,5 +1,6 @@
 package com.josuecamelo.estacionamento;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -8,6 +9,7 @@ import com.josuecamelo.estacionamento.services.BaseService;
 
 @RestController
 @RequestMapping("/usuarios")
+@CrossOrigin(origins = "*")
 public class UsuarioController extends GenericRestController<Usuario> {
 
 	public UsuarioController(BaseService<Usuario> baseService) {

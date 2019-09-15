@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.http.ResponseEntity;
 
 public interface BaseService<T> {
+	//Page<T> findAll(Pageable pageable);
 	List<T> findAll();
 	T create(T t);
 	T save(T t);
