@@ -7,8 +7,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -21,9 +23,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Table(name = "patios")
 public class Patio {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="patio_Seq")
+	@SequenceGenerator(name="patio_Seq", sequenceName="patio_seq_id", allocationSize=1)
 	@Column
 	private Long id;
+	
 	@Column
 	private String descricao;
 	@Column
@@ -41,8 +45,9 @@ public class Patio {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Patio(String descricao) {
+	public Patio(String descricao, Double taxaHora) {
 		this.descricao = descricao;
+		this.taxaHora = taxaHora;
 	}
 
 	public Long getId() {

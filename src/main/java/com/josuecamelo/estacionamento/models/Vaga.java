@@ -5,9 +5,11 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -17,8 +19,11 @@ import com.josuecamelo.estacionamento.enums.VagaStatus;
 @Table(name = "vagas")
 public class Vaga {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="vaga_Seq")
+	@SequenceGenerator(name="vaga_Seq", sequenceName="vaga_seq_id", allocationSize=1)
+	@Column
 	private Long id;
+	
 	@Column(nullable=false)
 	private Integer numero;	
 	
@@ -37,9 +42,10 @@ public class Vaga {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Vaga(Integer numero, Patio patio) {
+	public Vaga(Integer numero, Patio patio, VagaStatus status) {
 		this.numero = numero;
 		this.patio = patio;
+		this.status = status;
 	}
 
 	public Long getId() {

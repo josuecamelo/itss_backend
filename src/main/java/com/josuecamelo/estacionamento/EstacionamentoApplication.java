@@ -1,9 +1,29 @@
 package com.josuecamelo.estacionamento;
 
 import java.util.Random;
+import java.util.stream.LongStream;
 
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+
+import com.josuecamelo.estacionamento.enums.VagaStatus;
+import com.josuecamelo.estacionamento.models.Cliente;
+import com.josuecamelo.estacionamento.models.Cor;
+import com.josuecamelo.estacionamento.models.Modelo;
+import com.josuecamelo.estacionamento.models.Patio;
+import com.josuecamelo.estacionamento.models.Usuario;
+import com.josuecamelo.estacionamento.models.Vaga;
+import com.josuecamelo.estacionamento.models.Veiculo;
+import com.josuecamelo.estacionamento.repositories.ClienteRepository;
+import com.josuecamelo.estacionamento.repositories.CorRepository;
+import com.josuecamelo.estacionamento.repositories.EstacionamentoRepository;
+import com.josuecamelo.estacionamento.repositories.ModeloRepository;
+import com.josuecamelo.estacionamento.repositories.PatioRepository;
+import com.josuecamelo.estacionamento.repositories.UsuarioRepository;
+import com.josuecamelo.estacionamento.repositories.VagaRepository;
+import com.josuecamelo.estacionamento.repositories.VeiculoRepository;
 
 @SpringBootApplication
 public class EstacionamentoApplication {
@@ -12,21 +32,26 @@ public class EstacionamentoApplication {
 		SpringApplication.run(EstacionamentoApplication.class, args);
 	}
 
-	/*@Bean
-	CommandLineRunner init(UsuarioRepository repository, ClienteRepository clienteRepository) {
+	/*
+	 * Popular Banco Teste
+	 * */
+	@Bean
+	CommandLineRunner init(UsuarioRepository repository, ClienteRepository clienteRepository, 
+			ModeloRepository modeloRepository, CorRepository corRepository, PatioRepository patioRepository, 
+			VagaRepository vagaRepository, EstacionamentoRepository estacionamentoRepository, VeiculoRepository veiculoRepository) {
 		return args -> {
 			repository.deleteAll();
-			LongStream.range(1, 200).mapToObj(i -> {
+			LongStream.range(1, 11).mapToObj(i -> {
 				Usuario usuario = new Usuario();
-				usuario.setNome("Usuário " + i);
-				usuario.setLogin("usuario" + i);
+				usuario.setNome("Administrador " + i);
+				usuario.setLogin("admin" + i);
 				usuario.setTelefone("(62) 9999-" + (8000 + i));
-				usuario.setSenha("12345678");
+				usuario.setSenha("admin" + i);
 				return usuario;
 			}).map(v -> repository.save(v)).forEach(System.out::println);
 
 			clienteRepository.deleteAll();
-			LongStream.range(1, 200).mapToObj(i -> {
+			LongStream.range(1, 11).mapToObj(i -> {
 				Cliente cliente = new Cliente();
 				cliente.setNome("Cliente " + i);
 				try {
@@ -38,10 +63,38 @@ public class EstacionamentoApplication {
 				cliente.setTelefone("(62) 98491-" + (8000 + i));
 				return cliente;
 			}).map(v -> clienteRepository.save(v)).forEach(System.out::println);
+			
+			modeloRepository.deleteAll();
+			LongStream.range(1, 11).mapToObj(i -> {
+				Modelo modelo = new Modelo();
+				modelo.setNome("Modelo " + i);			
+				return modelo;
+			}).map(v -> modeloRepository.save(v)).forEach(System.out::println);
+			
+			corRepository.deleteAll();
+			LongStream.range(1, 11).mapToObj(i -> {
+				Cor cor = new Cor();
+				cor.setNome("Cor " + i);			
+				return cor;
+			}).map(v -> corRepository.save(v)).forEach(System.out::println);
+			
+			Patio p1 = new Patio("Pátio 1", 5d);
+			Patio p2 = new Patio("Pátio 2", 10d);
+			patioRepository.save(p1);
+			patioRepository.save(p2);
+			
+			Vaga v1 = new Vaga(1, p1, VagaStatus.DISPONIVEL);
+			Vaga v2 = new Vaga(2, p1, VagaStatus.DISPONIVEL);
+			Vaga v3 = new Vaga(3, p1, VagaStatus.DISPONIVEL);
+			Vaga v4 = new Vaga(4, p2, VagaStatus.DISPONIVEL);
+			vagaRepository.save(v1);
+			vagaRepository.save(v2);
+			vagaRepository.save(v3);
+			vagaRepository.save(v4);
 		};
 		
 		
-	}*/
+	}
 
 	public String geraCPF() throws Exception {
 

@@ -5,19 +5,26 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Table(name = "estacionamentos")
 public class Estacionamento {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="estacionamento_Seq")
+	@SequenceGenerator(name="estacionamento_Seq", sequenceName="estacionamento_seq_id", allocationSize=1)
 	@Column
 	private Long id;
+	
 	@Column
+	@CreationTimestamp
 	private Date entrada;
 	@Column
 	private Date saida;

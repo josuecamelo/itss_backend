@@ -6,5 +6,5 @@ import com.josuecamelo.estacionamento.models.Usuario;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
-	
+	Usuario findByLogin(String username);
 }

@@ -3,14 +3,17 @@ package com.josuecamelo.estacionamento.models;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "usuarios")
 public class Usuario {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="usuario_Seq")
+	@SequenceGenerator(name="usuario_Seq", sequenceName="usuario_seq_id", allocationSize=1)
 	@Column
 	private Long id;
 	

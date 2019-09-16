@@ -6,5 +6,5 @@ import com.josuecamelo.estacionamento.models.Vaga;
 
 @Repository
 public interface VagaRepository extends JpaRepository<Vaga, Long> {
-	
+	Vaga findByStatus(String status);
 }

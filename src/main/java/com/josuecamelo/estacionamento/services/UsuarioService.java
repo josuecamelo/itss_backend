@@ -44,6 +44,18 @@ public class UsuarioService implements BaseService<Usuario> {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public ResponseEntity<?> login(String login, String senha) {
+		ResponseEntity<?> res = null;
+		Usuario u = this.usuarioRepository.findByLogin(login);
+		res = ResponseEntity.notFound().build();
+		
+		if(u.getSenha().equals(senha)) {
+			res = ResponseEntity.ok().build();
+		}
+		
+		return res;
+	}
 
 	@Override
 	public ResponseEntity<?> deleteById(long id) {
